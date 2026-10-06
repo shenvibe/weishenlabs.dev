@@ -1,7 +1,7 @@
 {
   "tagline": "A tiny farm of apps, grown for fun 🌱",
   "dialog": [
-    "Hey, welcome to Weishen Labs! ようこそ",
+    "Hey, welcome to weishenlabs! ようこそ",
     "I'm Wei Shen. Studied accounting, then got hooked on AI 😅",
     "This is my tiny farm of side projects. Nothing's fully grown yet… 🌱",
     "The robot farmer does most of the work. Tip him if you like ☕🤖"
@@ -20,7 +20,7 @@
     "status": [
       [
         "NAME",
-        "Tan Wei Shen"
+        "Wei Shen"
       ],
       [
         "STUDIED",

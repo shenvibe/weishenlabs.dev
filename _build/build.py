@@ -215,7 +215,7 @@ def home():
     return f'''
       <section class="hero" aria-labelledby="tagline">
         <h1 id="tagline">{e(C["tagline"])}</h1>
-        <p class="by">by Tan Wei Shen · fun little projects made with AI</p>
+        <p class="by">by Wei Shen · fun little projects made with AI</p>
         <div class="screen">
           <div class="view" data-time="day">
             {scene()}
@@ -300,7 +300,7 @@ QR_CSS = 0
 def qr_block():
     if not QR_CSS:
         return '<div class="qr-missing">QR coming soon</div>'
-    return f'<img class="qr" src="/assets/tip-qr.png" width="{QR_CSS}" height="{QR_CSS}" alt="DuitNow QR code for tipping Tan Wei Shen">'
+    return f'<img class="qr" src="/assets/tip-qr.png" width="{QR_CSS}" height="{QR_CSS}" alt="DuitNow QR code for tipping Wei Shen">'
 
 
 def nav(active):
@@ -322,8 +322,8 @@ if __name__ == "__main__":
     if qr_path.exists():
         from PIL import Image
         QR_CSS = Image.open(qr_path).width // 2
-    render("Weishen Labs", "A tiny farm of fun little projects by Tan Wei Shen, made with AI tools.", home(), ROOT / "index.html")
-    render("Projects · Weishen Labs", "Fun little projects growing on the Weishen Labs farm.", projects_page(), ROOT / "projects" / "index.html", "projects")
-    render("Farm Journal · Weishen Labs", "What's been happening on the Weishen Labs farm.", journal_page(), ROOT / "journal" / "index.html", "journal")
-    render("Tip Jar · Weishen Labs", "Tip the robot farmer behind Weishen Labs via TNG / DuitNow.", tip_page(), ROOT / "tip" / "index.html", "tip")
-    render("About · Weishen Labs", "About Tan Wei Shen — accounting & finance grad who got hooked on AI.", about_page(), ROOT / "about" / "index.html", "about")
+    render("weishenlabs", "A tiny farm of fun little projects by Wei Shen, made with AI tools.", home(), ROOT / "index.html")
+    render("Projects · weishenlabs", "Fun little projects growing on the weishenlabs farm.", projects_page(), ROOT / "projects" / "index.html", "projects")
+    render("Farm Journal · weishenlabs", "What's been happening on the weishenlabs farm.", journal_page(), ROOT / "journal" / "index.html", "journal")
+    render("Tip Jar · weishenlabs", "Tip the robot farmer behind weishenlabs via TNG / DuitNow.", tip_page(), ROOT / "tip" / "index.html", "tip")
+    render("About · weishenlabs", "About Wei Shen — accounting & finance grad who got hooked on AI.", about_page(), ROOT / "about" / "index.html", "about")
