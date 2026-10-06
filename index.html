@@ -4,193 +4,67 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Weishen Labs</title>
-  <meta name="description" content="Weishen Labs — projects and experiments by Tan Wei Shen.">
-  <meta name="theme-color" content="#0a0b0f">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230a0b0f'/><text x='16' y='22' font-family='monospace' font-size='16' font-weight='700' text-anchor='middle' fill='%237cf2c4'>W</text></svg>">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <meta name="description" content="Projects and experiments by Tan Wei Shen, exploring data, markets and automation.">
+  <meta name="theme-color" content="#ffffff">
   <style>
-    :root {
-      --bg: #0a0b0f;
-      --surface: #12141b;
-      --border: #1f2330;
-      --text: #e8eaf0;
-      --muted: #8b90a0;
-      --accent: #7cf2c4;
-      --accent-dim: rgba(124, 242, 196, 0.12);
-      --mono: "JetBrains Mono", ui-monospace, monospace;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: Inter, system-ui, -apple-system, sans-serif;
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-    }
-    body::before {
-      content: "";
-      position: fixed; inset: 0;
-      background:
-        radial-gradient(600px circle at 15% 0%, rgba(124, 242, 196, 0.08), transparent 60%),
-        radial-gradient(500px circle at 90% 20%, rgba(120, 140, 255, 0.06), transparent 60%);
-      pointer-events: none;
-      z-index: -1;
-    }
-    a { color: inherit; text-decoration: none; }
-    .wrap { max-width: 960px; margin: 0 auto; padding: 0 20px; }
-
-    nav {
-      position: sticky; top: 0; z-index: 10;
-      backdrop-filter: blur(12px);
-      background: rgba(10, 11, 15, 0.7);
-      border-bottom: 1px solid var(--border);
-    }
-    nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 60px; }
-    .logo { font-family: var(--mono); font-weight: 500; }
-    .logo span { color: var(--accent); }
-    nav ul { display: flex; gap: 24px; list-style: none; font-size: 14px; color: var(--muted); }
-    nav ul a:hover { color: var(--text); }
-
-    .hero { padding: 120px 0 96px; }
-    .tag {
-      display: inline-flex; align-items: center; gap: 8px;
-      font-family: var(--mono); font-size: 13px; color: var(--accent);
-      background: var(--accent-dim); border: 1px solid rgba(124, 242, 196, 0.25);
-      padding: 6px 12px; border-radius: 999px; margin-bottom: 28px;
-    }
-    .tag::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 10px var(--accent); }
-    h1 { font-size: clamp(40px, 7vw, 68px); line-height: 1.05; letter-spacing: -0.03em; font-weight: 700; }
-    h1 .grad { background: linear-gradient(90deg, var(--accent), #8ea2ff); -webkit-background-clip: text; background-clip: text; color: transparent; }
-    .hero p { margin-top: 24px; font-size: 18px; color: var(--muted); max-width: 560px; }
-    .cta { display: flex; gap: 12px; margin-top: 36px; flex-wrap: wrap; }
-    .btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 12px 20px; border-radius: 10px; font-weight: 500; font-size: 15px;
-      border: 1px solid var(--border); transition: all .2s;
-    }
-    .btn.primary { background: var(--accent); color: #06130d; border-color: var(--accent); }
-    .btn.primary:hover { box-shadow: 0 0 24px rgba(124, 242, 196, 0.35); }
-    .btn:not(.primary):hover { border-color: var(--muted); }
-
-    section { padding: 72px 0; }
-    .label { font-family: var(--mono); font-size: 13px; color: var(--accent); margin-bottom: 10px; }
-    h2 { font-size: 32px; letter-spacing: -0.02em; margin-bottom: 36px; }
-
-    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
-    .card {
-      background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
-      padding: 24px; display: flex; flex-direction: column; gap: 14px;
-      transition: border-color .2s, transform .2s;
-    }
-    .card:hover { border-color: rgba(124, 242, 196, 0.4); transform: translateY(-2px); }
-    .card-top { display: flex; justify-content: space-between; align-items: center; font-family: var(--mono); font-size: 12px; color: var(--muted); }
-    .status { color: var(--accent); }
-    .card h3 { font-size: 19px; letter-spacing: -0.01em; }
-    .card p { color: var(--muted); font-size: 15px; flex: 1; }
-    .chips { display: flex; flex-wrap: wrap; gap: 6px; }
-    .chip { font-family: var(--mono); font-size: 12px; padding: 3px 9px; border-radius: 6px; background: #1a1d27; color: #b6bbc9; }
-    .card.ghost { border-style: dashed; background: transparent; justify-content: center; align-items: center; text-align: center; min-height: 220px; }
-    .card.ghost:hover { transform: none; }
-    .card.ghost .plus { font-family: var(--mono); font-size: 28px; color: var(--accent); }
-
-    .about { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
-    .about p { color: var(--muted); font-size: 16px; }
-    .about p + p { margin-top: 14px; }
-    .stack { display: flex; flex-wrap: wrap; gap: 8px; align-content: flex-start; }
-    .stack .chip { font-size: 13px; padding: 6px 12px; }
-
-    .contact { text-align: center; padding: 96px 0; }
-    .contact h2 { margin-bottom: 14px; }
-    .contact p { color: var(--muted); margin-bottom: 28px; }
-    .contact .cta { justify-content: center; }
-
-    footer { border-top: 1px solid var(--border); padding: 28px 0; font-size: 13px; color: var(--muted); font-family: var(--mono); }
-    footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
-
-    @media (max-width: 640px) {
-      nav ul { gap: 16px; }
-      .hero { padding: 80px 0 64px; }
-      .about { grid-template-columns: 1fr; gap: 28px; }
-    }
+    body { margin: 0; background: #fff; color: #111; font-family: Arial, Helvetica, sans-serif; line-height: 1.55; }
+    a { color: inherit; text-underline-offset: .22em; }
+    .wrap { width: min(1080px, calc(100% - 48px)); margin: auto; }
+    header { padding: 32px 0; display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+    .brand { font-size: 1.125rem; font-weight: 700; text-decoration: none; letter-spacing: -.035em; }
+    header a:last-child { font-size: .9375rem; }
+    main { padding-top: 52px; }
+    .products { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 26px; }
+    .product { min-height: 238px; border: 10px solid #111; border-radius: 7px; padding: 23px 20px; display: flex; flex-direction: column; justify-content: center; text-decoration: none; }
+    .product[href] { transition: transform .18s ease, background .18s ease; }
+    .product[href]:hover { transform: translateY(-5px); background: #f3f3f3; }
+    a:focus-visible { outline: 3px solid #2859d6; outline-offset: 6px; }
+    .number { font-size: .875rem; color: #595959; margin-bottom: 14px; }
+    .product h2 { font-size: clamp(1.375rem, 2.3vw, 1.75rem); font-weight: 500; line-height: 1.22; margin: 0; letter-spacing: -.035em; overflow-wrap: anywhere; }
+    .product p { margin: 14px 0 0; color: #595959; font-size: .9375rem; }
+    .about { max-width: 650px; margin: 65px auto 0; text-align: center; }
+    .about h1 { font-size: 2rem; font-weight: 500; letter-spacing: -.035em; margin: 0 0 24px; }
+    .about p { font-size: 1.0625rem; color: #454545; margin: 0 0 14px; }
+    .about .contact { display: inline-block; margin-top: 15px; font-size: 1rem; }
+    footer { margin-top: 94px; padding: 24px 0 30px; border-top: 1px solid #e4e4e4; font-size: .875rem; color: #595959; display: flex; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
+    @media (max-width: 760px) { .wrap { width: min(540px, calc(100% - 36px)); } header { padding: 24px 0; } main { padding-top: 24px; } .products { grid-template-columns: 1fr; gap: 20px; } .product { min-height: 180px; border-width: 8px; } .product h2 { font-size: 1.75rem; } .about { margin-top: 48px; } footer { margin-top: 64px; } }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .product[href] { transition: none; } }
   </style>
 </head>
 <body>
-  <nav>
-    <div class="wrap">
-      <a href="#" class="logo">weishen<span>labs</span></a>
-      <ul>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </div>
-  </nav>
-
-  <main class="wrap">
-    <header class="hero">
-      <div class="tag">building in public</div>
-      <h1>Hi, I'm Wei Shen.<br><span class="grad">I build things with code.</span></h1>
-      <p>Weishen Labs is where I ship projects and experiments — from quant models to whatever I'm curious about next.</p>
-      <div class="cta">
-        <a href="#projects" class="btn primary">See projects →</a>
-        <a href="https://github.com/shenvibe" class="btn" target="_blank" rel="noopener">GitHub</a>
-      </div>
+  <div class="wrap">
+    <header>
+      <a class="brand" href="/" aria-label="Weishen Labs home">weishenlabs</a>
+      <a href="https://github.com/shenvibe">GitHub</a>
     </header>
-
-    <section id="projects">
-      <div class="label">// projects</div>
-      <h2>What I'm working on</h2>
-      <div class="grid">
-        <article class="card">
-          <div class="card-top"><span>01</span><span class="status">● active</span></div>
-          <h3>Polymarket KL Temp Quant</h3>
-          <p>A quant model that forecasts Kuala Lumpur temperatures and paper-trades Polymarket weather markets on those predictions.</p>
-          <div class="chips"><span class="chip">Python</span><span class="chip">quant</span><span class="chip">forecasting</span></div>
+    <main>
+      <section class="products" aria-label="Products and projects">
+        <a class="product" href="https://github.com/shenvibe/polymarket-kl-temp">
+          <span class="number">01 / Project</span>
+          <h2>Polymarket KL Temp Quant</h2>
+          <p>Kuala Lumpur temperature forecasts and paper trading.</p>
+        </a>
+        <article class="product">
+          <span class="number">02 / Coming soon</span>
+          <h2>Product 2</h2>
+          <p>More experiments on the way.</p>
         </article>
-        <div class="card ghost">
-          <div class="plus">+</div>
-          <p>More experiments coming soon.</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="about">
-      <div class="label">// about</div>
-      <h2>About me</h2>
-      <div class="about">
-        <div>
-          <p>I'm Tan Wei Shen, a student developer who likes turning ideas into working projects.</p>
-          <p>I'm especially into data, markets and automation — building small tools, testing them, and seeing what works.</p>
-        </div>
-        <div class="stack">
-          <span class="chip">Python</span>
-          <span class="chip">Data analysis</span>
-          <span class="chip">Quant / trading</span>
-          <span class="chip">Git &amp; GitHub</span>
-          <span class="chip">AI tools</span>
-        </div>
-      </div>
-    </section>
-
-    <section id="contact" class="contact">
-      <div class="label">// contact</div>
-      <h2>Let's build something</h2>
-      <p>Want to chat about a project or collab? Find me on GitHub.</p>
-      <div class="cta">
-        <a href="https://github.com/shenvibe" class="btn primary" target="_blank" rel="noopener">github.com/shenvibe</a>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="wrap">
-      <span>© <span id="y">2026</span> Weishen Labs</span>
-      <span>weishenlabs.dev</span>
-    </div>
-  </footer>
-  <script>document.getElementById("y").textContent = new Date().getFullYear();</script>
+        <article class="product">
+          <span class="number">03 / Coming soon</span>
+          <h2>Product 3</h2>
+          <p>Space for the next idea.</p>
+        </article>
+      </section>
+      <section class="about" id="about" aria-labelledby="about-heading">
+        <h1 id="about-heading">About Me</h1>
+        <p>I'm Tan Wei Shen, a student developer who likes turning ideas into working projects.</p>
+        <p>I'm especially into data, markets and automation — building small tools, testing them, and seeing what works.</p>
+        <a class="contact" href="https://github.com/shenvibe">Find me on GitHub</a>
+      </section>
+    </main>
+    <footer><span>© 2026 Weishen Labs</span><span>weishenlabs.dev</span></footer>
+  </div>
 </body>
 </html>
