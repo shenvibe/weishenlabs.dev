@@ -154,6 +154,8 @@ def nice_date(iso):
 
 STAGES = {"seed": ("🌰 Seed", ""), "sprout": ("🌱 Sprout", "sprout"), "harvest": ("🌾 Harvest", "live")}
 BOOK = ["KKKKKKKKK.", "KBBBBBBBK.", "KBWWWWWBKK", "KBBBBBBBKK", "KBWWWWBBKK", "KBBBBBBBKK", "KBBBBBBBKK", "KKKKKKKKKK", ".KWWWWWWWK", "..KKKKKKKK"]
+CUP = ["...W.W.....", "....W.W....", "...W.W.....", "KKKKKKKKK..", "KCCCCCCCKKK", "KCCRRCCCK.K", "KCRRRRCCK.K", "KCCRRCCCKKK", "KCCCCCCCK..", ".KCCCCCK...", "..KKKKK...."]
+CUP_PAL = {"K": INK, "C": "#fffaf0", "R": "#e2553f", "W": "#c9b592"}
 BOOK_PAL = {"K": INK, "B": "#c8553d", "W": "#f3e2b5"}
 
 PAGES = [  # key, nav label, url, Japanese subtitle
@@ -265,13 +267,27 @@ def tip_page():
               <p class="small">Any amount is great. Even RM1 keeps him watering the crops ☕</p>
             </div>
           </div>
-          <div class="qr-card px">
-            <div class="qr-head">Touch 'n Go eWallet · DuitNow QR</div>
-            {qr_block()}
-            <div class="qr-name">TAN WEI SHEN</div>
-            <p class="small">Scan with TNG or any Malaysian banking app.</p>
-            <a class="btn" href="/assets/tip-qr.png" download="weishenlabs-tip-qr.png">Save QR image</a>
-            <p class="small hint">On your phone? Save it, then use “scan from gallery” in your TNG app.</p>
+          <div class="pay px">
+            <div class="tabs" role="tablist" aria-label="How to tip">
+              <button role="tab" id="tab-my" aria-controls="panel-my" aria-selected="true">🇲🇾 Malaysia</button>
+              <button role="tab" id="tab-intl" aria-controls="panel-intl" aria-selected="false" tabindex="-1">🌏 International</button>
+            </div>
+            <div class="panel" id="panel-my" role="tabpanel" aria-labelledby="tab-my">
+              <div class="qr-head">Touch 'n Go eWallet · DuitNow QR</div>
+              {qr_block()}
+              <div class="qr-name">TAN WEI SHEN</div>
+              <p class="small">Scan with TNG or any Malaysian banking app.</p>
+              <a class="btn" href="/assets/tip-qr.png" download="weishenlabs-tip-qr.png">Save QR image</a>
+              <p class="small hint">On your phone? Save it, then use “scan from gallery” in your TNG app.</p>
+            </div>
+            <div class="panel" id="panel-intl" role="tabpanel" aria-labelledby="tab-intl">
+              <div class="qr-head kofi-head">Ko-fi · from anywhere</div>
+              <div class="cup">{icon(CUP, CUP_PAL, 8, "sprite")}</div>
+              <p>Buy the robot farmer a coffee on Ko-fi.</p>
+              <p class="small">Pay with card, Apple Pay or Google Pay — no account needed.</p>
+              <a class="btn" href="{C["kofi"]}" target="_blank" rel="noopener">Tip on Ko-fi ☕</a>
+              <p class="small">{C["kofi"].replace("https://", "")}</p>
+            </div>
           </div>
         </div>
       </section>'''
