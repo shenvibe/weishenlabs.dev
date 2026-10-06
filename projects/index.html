@@ -33,12 +33,13 @@
 
     header { padding: 28px 0; display: flex; justify-content: space-between; align-items: center; gap: 20px; }
     .brand { display: inline-flex; align-items: center; gap: 6px; text-decoration: none; font-size: 1.75rem; line-height: 1; letter-spacing: .02em; }
-    .brand .chev { width: 20px; height: 28px; animation: glide 3.2s cubic-bezier(.45, 0, .55, 1) infinite; }
+    .brand .chev { width: 20px; height: 28px; animation: glide 4.2s ease-in-out infinite; }
     .brand .word { text-shadow: 2px 2px 0 var(--shade); }
-    .brand .cur { width: 18px; height: 6px; background: var(--lime); box-shadow: 2px 2px 0 var(--leaf-2); align-self: flex-end; margin: 0 0 3px 2px; animation: caret 1.2s ease-in-out infinite; }
-    .brand.typing .cur { animation: none; opacity: 1; }
-    @keyframes glide { 0%, 100% { transform: translateX(0); filter: drop-shadow(0 0 0 rgba(143, 209, 79, 0)); } 50% { transform: translateX(3px); filter: drop-shadow(0 0 5px rgba(143, 209, 79, .65)); } }
-    @keyframes caret { 0%, 40% { opacity: 1; } 55%, 85% { opacity: .08; } 100% { opacity: 1; } }
+    .brand .cur { width: 18px; height: 6px; background: var(--lime); box-shadow: 2px 2px 0 var(--leaf-2); align-self: flex-end; margin: 0 0 3px 2px; animation: caret 4.2s ease-in-out infinite; }
+    .brand.typing .chev, .brand.typing .cur { animation: none; opacity: 1; }
+    /* one shared 4.2s loop: the > glides out and back (0-26%), then the cursor blinks twice (32-84%) */
+    @keyframes glide { 0%, 26%, 100% { transform: translateX(0); filter: drop-shadow(0 0 0 rgba(143, 209, 79, 0)); } 13% { transform: translateX(3px); filter: drop-shadow(0 0 5px rgba(143, 209, 79, .7)); } }
+    @keyframes caret { 0%, 30% { opacity: 1; } 36%, 46% { opacity: .08; } 52%, 62% { opacity: 1; } 68%, 78% { opacity: .08; } 84%, 100% { opacity: 1; } }
     @keyframes nudge { 50% { transform: translateX(4px); } }
     @keyframes blink { 56%, 100% { opacity: 0; } }
     nav { display: flex; gap: 22px; }
@@ -181,7 +182,7 @@
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       .cloud, .chick, .robot, .walk, .sway, .stars, .slot .sprite, .robot-big, .sec .arrow, .status .heart, .eye, .chest { animation: none; }
-      .brand .chev { animation: none; } .menu-item, .mi-go { transition: none; }
+      .brand .chev, .brand .cur { animation: none; } .menu-item, .mi-go { transition: none; }
     }
   </style>
 </head>
