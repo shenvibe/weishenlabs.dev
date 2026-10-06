@@ -153,11 +153,30 @@ def nice_date(iso):
 
 
 STAGES = {"seed": ("🌰 Seed", ""), "sprout": ("🌱 Sprout", "sprout"), "harvest": ("🌾 Harvest", "live")}
+BOOK = ["KKKKKKKKK.", "KBBBBBBBK.", "KBWWWWWBKK", "KBBBBBBBKK", "KBWWWWBBKK", "KBBBBBBBKK", "KBBBBBBBKK", "KKKKKKKKKK", ".KWWWWWWWK", "..KKKKKKKK"]
+BOOK_PAL = {"K": INK, "B": "#c8553d", "W": "#f3e2b5"}
+
+PAGES = [  # key, nav label, url, Japanese subtitle
+    ("projects", "Projects", "/projects/", "プロジェクト"),
+    ("journal", "Journal", "/journal/", "日記"),
+    ("tip", "Tip jar", "/tip/", "チップ"),
+    ("about", "About", "/about/", "自己紹介"),
+]
 
 
-def app_cards():
+def entries():
+    return sorted(C["journal"], key=lambda j: j["date"], reverse=True)
+
+
+def page_head(key, title, lede):
+    ja = dict((k, j) for k, _, _, j in PAGES)[key]
+    return (f'<h1 class="sec page-title"><span class="arrow" aria-hidden="true">▶</span>{title} <span class="ja" lang="ja">{ja}</span></h1>'
+            f'<p class="lede">{lede}</p>')
+
+
+def project_cards():
     cards = []
-    for i, a in enumerate(C["apps"], 1):
+    for i, a in enumerate(C["projects"], 1):
         label, cls = STAGES[a["stage"]]
         art = icon(PACKET, {"K": INK, "P": PACKET_COLORS.get(a.get("color"), "#f2c86b")}, 5)
         title = e(a["title"])
@@ -172,65 +191,78 @@ def app_cards():
     return "\n          ".join(cards)
 
 
-def journal_list(entries):
-    items = "".join(f'<li><time datetime="{j["date"]}">{nice_date(j["date"])}</time><p>{e(j["text"])}</p></li>' for j in entries)
-    return f'<ol class="log">{items}</ol>'
-
-
-def status_rows():
-    return "".join(f"<dt>{e(k)}</dt><dd>{e(v)}</dd>" for k, v in C["about"]["status"])
+def journal_list(items):
+    rows = "".join(f'<li><time datetime="{j["date"]}">{nice_date(j["date"])}</time><p>{e(j["text"])}</p></li>' for j in items)
+    return f'<ol class="log">{rows}</ol>'
 
 
 def home():
-    entries = sorted(C["journal"], key=lambda j: j["date"], reverse=True)
-    more = '<a class="more-link" href="/journal/">All journal entries ▶</a>' if len(entries) > 3 else ""
-    dialog_sr = " ".join(C["dialog"])
-    first = e(C["dialog"][0])
-    paras = "".join(f"<p>{e(p)}</p>" for p in C["about"]["paragraphs"])
-    left, right = (f'<div class="side"><h3>{e(v["title"])}</h3><ul>' + "".join(f"<li>{e(i)}</li>" for i in v["items"]) + "</ul></div>" for v in C["about"]["vs"])
-    versus = f'<div class="versus">{left}<div class="vs" aria-hidden="true">VS</div>{right}</div>'
     sun = f'<svg class="hud-sun" viewBox="0 0 7 7" width="14" height="14" shape-rendering="crispEdges" aria-hidden="true">{sprite(*circle(3, "#ffd34d", "#f5b833"))}</svg>'
     moon = f'<svg class="hud-moon" viewBox="0 0 7 7" width="14" height="14" shape-rendering="crispEdges" aria-hidden="true">{sprite(*circle(3, "#fff3c4", "#e8d9a0", cut=2))}</svg>'
+    icons = {
+        "projects": icon(PACKET, {"K": INK, "P": "#f2c86b"}, 4),
+        "journal": icon(BOOK, BOOK_PAL, 4),
+        "tip": icon(ROBOT, ROBOT_PAL, 4),
+        "about": icon(HEART, HEART_PAL, 5),
+    }
+    blurbs = {"projects": "What's growing on the farm", "journal": "Little updates, newest first",
+              "tip": "Feed the robot farmer ☕", "about": "Who's behind all this"}
+    menu = "".join(f'<a class="menu-item px" href="{url}"><span class="mi-art">{icons[k]}</span>'
+                   f'<span class="mi-text"><span class="mi-label">{label} <span class="ja" lang="ja">{ja}</span></span>'
+                   f'<span class="mi-blurb">{blurbs[k]}</span></span><span class="mi-go" aria-hidden="true">▶</span></a>'
+                   for k, label, url, ja in PAGES)
+    latest = entries()[0]
     return f'''
       <section class="hero" aria-labelledby="tagline">
         <h1 id="tagline">{e(C["tagline"])}</h1>
-        <p class="by">by Tan Wei Shen · apps &amp; experiments made with AI</p>
+        <p class="by">by Tan Wei Shen · fun little projects made with AI</p>
         <div class="screen">
           <div class="view" data-time="day">
             {scene()}
-            <div class="hud px" aria-hidden="true">{sun}{moon}<div><div class="d">&nbsp;</div><div class="t">&nbsp;</div></div></div>
+            <div class="hud" aria-label="Wei Shen's local time in Kuala Lumpur">{sun}{moon}<div><div class="z">Wei Shen's time 🇲🇾</div><div class="d">&nbsp;</div><div class="t">&nbsp;</div></div></div>
           </div>
-          <div class="dialog px" role="button" tabindex="0" aria-label="Next message">
+          <div class="dialog px">
             <span class="name">Wei Shen</span>
-            <p class="sr-only">{e(dialog_sr)}</p>
-            <p class="typed" aria-hidden="true">{first}</p>
-            <span class="more" aria-hidden="true">▼</span>
+            <p class="sr-only">{e(" ".join(C["dialog"]))}</p>
+            <p class="typed" aria-hidden="true">{e(C["dialog"][0])}</p>
+            <span class="more" aria-hidden="true"></span>
           </div>
         </div>
       </section>
 
-      <section id="apps" aria-labelledby="apps-heading">
-        <h2 class="sec" id="apps-heading"><span class="arrow" aria-hidden="true">▶</span>The Field <span class="ja" lang="ja">アプリ畑</span></h2>
-        <p class="lede">Every app starts as a seed. <span class="stages">🌰 Seed → 🌱 Sprout → 🌾 Harvest <em>(ready to play!)</em></span></p>
+      <nav class="menu" aria-label="Explore">{menu}</nav>
+      <p class="latest"><span class="new">NEW</span> <time datetime="{latest["date"]}">{nice_date(latest["date"])}</time> — {e(latest["text"])} <a href="/journal/">Read the journal ▶</a></p>'''
+
+
+def projects_page():
+    return f'''
+      <section>
+        {page_head("projects", "Projects", "Every project starts as a seed. <span class='stages'>🌰 Seed → 🌱 Sprout → 🌾 Harvest <em>(ready to play!)</em></span>")}
         <div class="slots">
-          {app_cards()}
+          {project_cards()}
         </div>
-      </section>
+      </section>'''
 
-      <section id="journal" aria-labelledby="journal-heading">
-        <h2 class="sec" id="journal-heading"><span class="arrow" aria-hidden="true">▶</span>Farm Journal <span class="ja" lang="ja">日記</span></h2>
-        <div class="journal px">{journal_list(entries[:3])}{more}</div>
-      </section>
 
-      <section id="tip" aria-labelledby="tip-heading">
-        <h2 class="sec" id="tip-heading"><span class="arrow" aria-hidden="true">▶</span>Tip Jar <span class="ja" lang="ja">チップ</span></h2>
+def journal_page():
+    return f'''
+      <section>
+        {page_head("journal", "Farm Journal", "What's been happening on the farm, newest first.")}
+        <div class="journal px">{journal_list(entries())}</div>
+      </section>'''
+
+
+def tip_page():
+    return f'''
+      <section>
+        {page_head("tip", "Tip Jar", "Totally optional. Every bit helps the farm keep growing.")}
         <div class="tip">
           <div class="tip-pitch px">
             <div class="bot">{icon(ROBOT, ROBOT_PAL, 8, "robot-big")}</div>
             <div>
-              <h3>Feed the robot farmer 🤖</h3>
-              <p>This farm runs on AI. Half these apps get built with Claude and ChatGPT — so every tip goes toward their subscription, a.k.a. the robot farmer's salary.</p>
-              <p class="small">Any amount works. Even RM1 keeps him watering the crops ☕</p>
+              <h2>Feed the robot farmer 🤖</h2>
+              <p>Most of these projects get built with Claude and ChatGPT. Tips go to their subscriptions — basically the robot farmer's salary.</p>
+              <p class="small">Any amount is great. Even RM1 keeps him watering the crops ☕</p>
             </div>
           </div>
           <div class="qr-card px">
@@ -242,28 +274,23 @@ def home():
             <p class="small hint">On your phone? Save it, then use “scan from gallery” in your TNG app.</p>
           </div>
         </div>
-      </section>
-
-      <section id="about" aria-labelledby="about-heading">
-        <h2 class="sec" id="about-heading"><span class="arrow" aria-hidden="true">▶</span>About Me <span class="ja" lang="ja">自己紹介</span></h2>
-        <div class="about">
-          <div class="status">
-            <div class="title">{icon(HEART, HEART_PAL, 3, "heart")}<span>STATUS</span></div>
-            <dl>{status_rows()}</dl>
-          </div>
-          <div class="about-text px">{versus}{paras}</div>
-        </div>
       </section>'''
 
 
-def journal_page():
-    entries = sorted(C["journal"], key=lambda j: j["date"], reverse=True)
+def about_page():
+    a = C["about"]
+    rows = "".join(f"<dt>{e(k)}</dt><dd>{e(v)}</dd>" for k, v in a["status"])
+    paras = "".join(f"<p>{e(p)}</p>" for p in a["paragraphs"])
     return f'''
-      <section aria-labelledby="journal-heading">
-        <h1 class="sec page-title" id="journal-heading"><span class="arrow" aria-hidden="true">▶</span>Farm Journal <span class="ja" lang="ja">日記</span></h1>
-        <p class="lede">Everything that's happened on the farm, newest first.</p>
-        <div class="journal px">{journal_list(entries)}</div>
-        <p><a class="more-link" href="/">◀ Back to the farm</a></p>
+      <section>
+        {page_head("about", "About Me", "The person (and robot) behind the farm.")}
+        <div class="about">
+          <div class="status">
+            <div class="title">{icon(HEART, HEART_PAL, 3, "heart")}<span>STATUS</span></div>
+            <dl>{rows}</dl>
+          </div>
+          <div class="about-text px">{paras}</div>
+        </div>
       </section>'''
 
 
@@ -276,10 +303,14 @@ def qr_block():
     return f'<img class="qr" src="/assets/tip-qr.png" width="{QR_CSS}" height="{QR_CSS}" alt="DuitNow QR code for tipping Tan Wei Shen">'
 
 
-def render(title, description, body, out):
-    chev = icon(CHEV, CHEV_PAL, 4, "chev")
+def nav(active):
+    return "".join(f'<a href="{url}"' + (' aria-current="page"' if k == active else "") + f">{label}</a>" for k, label, url, _ in PAGES)
+
+
+def render(title, description, body, out, active=None):
     page = (SHELL.replace("{{TITLE}}", title).replace("{{DESCRIPTION}}", description)
-            .replace("{{CHEV}}", chev).replace("{{GRASS}}", GRASS_URI).replace("{{BODY}}", body)
+            .replace("{{CHEV}}", icon(CHEV, CHEV_PAL, 4, "chev")).replace("{{GRASS}}", GRASS_URI)
+            .replace("{{NAV}}", nav(active)).replace("{{BODY}}", body)
             .replace("{{DIALOG}}", json.dumps(C["dialog"], ensure_ascii=False)))
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(page)
@@ -291,6 +322,8 @@ if __name__ == "__main__":
     if qr_path.exists():
         from PIL import Image
         QR_CSS = Image.open(qr_path).width // 2
-    desc = "A tiny farm of apps by Tan Wei Shen, grown for fun with AI tools."
-    render("Weishen Labs", desc, home(), ROOT / "index.html")
-    render("Farm Journal · Weishen Labs", "What's been happening on the Weishen Labs farm.", journal_page(), ROOT / "journal" / "index.html")
+    render("Weishen Labs", "A tiny farm of fun little projects by Tan Wei Shen, made with AI tools.", home(), ROOT / "index.html")
+    render("Projects · Weishen Labs", "Fun little projects growing on the Weishen Labs farm.", projects_page(), ROOT / "projects" / "index.html", "projects")
+    render("Farm Journal · Weishen Labs", "What's been happening on the Weishen Labs farm.", journal_page(), ROOT / "journal" / "index.html", "journal")
+    render("Tip Jar · Weishen Labs", "Tip the robot farmer behind Weishen Labs via TNG / DuitNow.", tip_page(), ROOT / "tip" / "index.html", "tip")
+    render("About · Weishen Labs", "About Tan Wei Shen — accounting & finance grad who got hooked on AI.", about_page(), ROOT / "about" / "index.html", "about")

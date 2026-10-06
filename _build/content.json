@@ -2,29 +2,9 @@
   "tagline": "A tiny farm of apps, grown for fun 🌱",
   "dialog": [
     "Hey, welcome to Weishen Labs! ようこそ",
-    "I'm Wei Shen — accounting & finance by degree, AI tinkerer by obsession.",
-    "This is my tiny farm of apps. Nothing's fully grown yet… check back soon! 🌱",
-    "The robot farmer does most of the work. You can tip him below ☕🤖"
-  ],
-  "apps": [
-    {
-      "stage": "seed",
-      "title": "???",
-      "text": "Something's planted here. Not even I know what yet.",
-      "color": "yellow"
-    },
-    {
-      "stage": "seed",
-      "title": "???",
-      "text": "Waiting for rain… and motivation.",
-      "color": "pink"
-    },
-    {
-      "stage": "seed",
-      "title": "???",
-      "text": "Reserved for my next 2am idea.",
-      "color": "blue"
-    }
+    "I'm Wei Shen. Studied accounting, then got hooked on AI 😅",
+    "This is my tiny farm of side projects. Nothing's fully grown yet… 🌱",
+    "The robot farmer does most of the work. Tip him if you like ☕🤖"
   ],
   "journal": [
     {
@@ -43,44 +23,47 @@
         "Tan Wei Shen"
       ],
       [
-        "MAIN CLASS",
+        "STUDIED",
         "Accounting & Finance"
       ],
       [
-        "SUBCLASS",
-        "AI tinkerer"
+        "HOBBY",
+        "Playing with AI"
       ],
       [
-        "ALIGNMENT",
-        "Chaotic balanced"
+        "VIBE",
+        "Chaotic but balanced"
       ],
       [
-        "PARTNER",
+        "BUDDY",
         "Robot farmer 🤖"
       ]
     ],
-    "vs": [
-      {
-        "title": "📊 Accounting brain",
-        "items": [
-          "Debits must equal credits",
-          "Reconcile to the last sen",
-          "There's a rule for everything"
-        ]
-      },
-      {
-        "title": "🤖 AI brain",
-        "items": [
-          "Nothing is predictable",
-          "Sometimes confidently wrong",
-          "Just try it and see"
-        ]
-      }
-    ],
     "paragraphs": [
-      "By training, I'm an accounting & finance grad. My world was balance sheets, audit trails and numbers that have to tie out perfectly — no surprises allowed.",
-      "AI is the complete opposite. It's messy, unpredictable, sometimes confidently wrong… and somehow that's exactly what hooked me. Somewhere between a balance sheet and a prompt box, I fell for it.",
-      "So now I live in two worlds: one where everything must balance, and one where I just plant ideas and see what grows. This farm is where the second one lives 🌱"
+      "Hi, I'm Wei Shen! 👋",
+      "I studied accounting & finance. So yes — I'm the spreadsheet person.",
+      "Then I started playing with AI and got hooked. Kinda funny, right? Accounting is all about numbers that must balance. AI is more like \"let's just try and see\".",
+      "Now I build random little projects for fun. Some work, some don't 🌱"
     ]
-  }
+  },
+  "projects": [
+    {
+      "stage": "seed",
+      "title": "???",
+      "text": "Something's planted here. Not even I know what yet.",
+      "color": "yellow"
+    },
+    {
+      "stage": "seed",
+      "title": "???",
+      "text": "Waiting for rain… and motivation.",
+      "color": "pink"
+    },
+    {
+      "stage": "seed",
+      "title": "???",
+      "text": "Reserved for my next 2am idea.",
+      "color": "blue"
+    }
+  ]
 }
