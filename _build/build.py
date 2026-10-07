@@ -233,6 +233,7 @@ def home():
       </section>
 
       <nav class="menu" aria-label="Explore">{menu}</nav>
+      <p class="latest"><span class="new">LIVE</span> My first project: <a href="https://tengoktren.weishenlabs.dev">TengokTren — watch the trains ▶</a></p>
       <p class="latest"><span class="new">NEW</span> <time datetime="{latest["date"]}">{nice_date(latest["date"])}</time> — {e(latest["text"])} <a href="/journal/">Read the journal ▶</a></p>'''
 
 

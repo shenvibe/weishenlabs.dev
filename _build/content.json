@@ -48,10 +48,11 @@
   },
   "projects": [
     {
-      "stage": "seed",
-      "title": "???",
-      "text": "Something's planted here. Not even I know what yet.",
-      "color": "yellow"
+      "stage": "harvest",
+      "title": "TengokTren",
+      "text": "Watch trains move through a 3D Klang Valley. My first launched project — made for the joy of watching trains.",
+      "color": "blue",
+      "url": "https://tengoktren.weishenlabs.dev"
     },
     {
       "stage": "seed",
