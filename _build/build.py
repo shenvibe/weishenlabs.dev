@@ -317,12 +317,12 @@ def tip_page():
               <p class="small hint">On your phone? Save it, then use “scan from gallery” in your TNG app.</p>
             </div>
             <div class="tip-pane" id="panel-intl" role="tabpanel" aria-labelledby="tab-intl">
-              <div class="qr-head kofi-head">Ko-fi · from anywhere</div>
+              <div class="qr-head stripe-head">Stripe · card payments</div>
               <div class="cup">{icon(CUP, CUP_PAL, 8, "sprite")}</div>
-              <p>Buy the robot farmer a coffee on Ko-fi.</p>
-              <p class="small">Pay with card, Apple Pay or Google Pay — no account needed.</p>
-              <a class="btn" href="{C["kofi"]}" target="_blank" rel="noopener">Tip on Ko-fi ☕</a>
-              <p class="small">{C["kofi"].replace("https://", "")}</p>
+              <p>Enjoyed the apps? Tip the robot farmer a coffee.</p>
+              <p class="small">Pay by card, or use Apple Pay / Link when available.</p>
+              <a class="btn" href="{C["stripe"]}" target="_blank" rel="noopener">Tip with Stripe ☕</a>
+              <p class="small">Choose RM5–RM500 · suggested tip RM10 · charged in MYR.</p>
             </div>
           </div>
         </div>
@@ -377,5 +377,5 @@ if __name__ == "__main__":
     render("weishenlabs", "A tiny farm of fun little projects by Wei Shen, made with AI tools.", home(), ROOT / "index.html")
     render("Projects · weishenlabs", "Fun little projects growing on the weishenlabs farm.", projects_page(), ROOT / "projects" / "index.html", "projects")
     render("Farm Journal · weishenlabs", "What's been happening on the weishenlabs farm.", journal_page(), ROOT / "journal" / "index.html", "journal")
-    render("Tip Jar · weishenlabs", "Tip the robot farmer behind weishenlabs via TNG / DuitNow.", tip_page(), ROOT / "tip" / "index.html", "tip")
+    render("Tip Jar · weishenlabs", "Tip the robot farmer behind weishenlabs via TNG / DuitNow or Stripe.", tip_page(), ROOT / "tip" / "index.html", "tip")
     render("About · weishenlabs", "About Wei Shen — accounting & finance grad who got hooked on AI.", about_page(), ROOT / "about" / "index.html", "about")
