@@ -273,7 +273,7 @@ def tip_page():
               <button role="tab" id="tab-my" aria-controls="panel-my" aria-selected="true">🇲🇾 Malaysia</button>
               <button role="tab" id="tab-intl" aria-controls="panel-intl" aria-selected="false" tabindex="-1">🌏 International</button>
             </div>
-            <div class="panel" id="panel-my" role="tabpanel" aria-labelledby="tab-my">
+            <div class="tip-pane" id="panel-my" role="tabpanel" aria-labelledby="tab-my">
               <div class="qr-head">Touch 'n Go eWallet · DuitNow QR</div>
               {qr_block()}
               <div class="qr-name">TAN WEI SHEN</div>
@@ -281,7 +281,7 @@ def tip_page():
               <a class="btn" href="/assets/tip-qr.png" download="weishenlabs-tip-qr.png">Save QR image</a>
               <p class="small hint">On your phone? Save it, then use “scan from gallery” in your TNG app.</p>
             </div>
-            <div class="panel" id="panel-intl" role="tabpanel" aria-labelledby="tab-intl">
+            <div class="tip-pane" id="panel-intl" role="tabpanel" aria-labelledby="tab-intl">
               <div class="qr-head kofi-head">Ko-fi · from anywhere</div>
               <div class="cup">{icon(CUP, CUP_PAL, 8, "sprite")}</div>
               <p>Buy the robot farmer a coffee on Ko-fi.</p>
