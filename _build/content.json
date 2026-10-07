@@ -3,10 +3,14 @@
   "dialog": [
     "Hey, welcome to weishenlabs! ようこそ",
     "I'm Wei Shen. Studied accounting, then got hooked on AI 😅",
-    "This is my tiny farm of side projects. Nothing's fully grown yet… 🌱",
+    "My first harvest is in: TengokTren 🚆 Go watch some trains!",
     "The robot farmer does most of the work. Tip him if you like ☕🤖"
   ],
   "journal": [
+    {
+      "date": "2026-10-07",
+      "text": "First harvest! 🚆 TengokTren is live — watch trains move through a 3D Klang Valley."
+    },
     {
       "date": "2026-10-07",
       "text": "Rebuilt the whole site as a pixel farm 🌱 Hired a robot farmer. His salary? Your tips."
@@ -52,7 +56,13 @@
       "title": "TengokTren",
       "text": "Watch trains move through a 3D Klang Valley. My first launched project — made for the joy of watching trains.",
       "color": "blue",
-      "url": "https://tengoktren.weishenlabs.dev"
+      "url": "https://tengoktren.weishenlabs.dev",
+      "image": "/assets/projects/tengoktren.jpg",
+      "tags": [
+        "3D map",
+        "Klang Valley trains",
+        "EN · BM · 中文"
+      ]
     },
     {
       "stage": "seed",

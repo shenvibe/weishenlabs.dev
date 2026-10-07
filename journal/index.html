@@ -158,6 +158,25 @@
     .about-text { padding: 26px 28px; }
     .about-text p { margin: 0 0 14px; font-size: 1.05rem; } .about-text p:last-child { margin: 0; }
 
+    .petal { animation: fall 9s linear infinite; }
+    .petal.p1 { animation-delay: -1.5s; } .petal.p2 { animation-delay: -3s; } .petal.p3 { animation-delay: -4.5s; } .petal.p4 { animation-delay: -6s; } .petal.p5 { animation-delay: -7.5s; }
+    @keyframes fall { 0% { transform: translate(0, 0); opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { transform: translate(38px, 26px); opacity: 0; } }
+    .view[data-time="night"] .petals { opacity: .5; }
+    .harvest .sec { margin-top: 72px; }
+    .feature { display: grid; grid-template-columns: 1.25fr 1fr; gap: 28px; padding: 22px; margin: 18px 4px 0; align-items: center; }
+    .feature-shot { display: block; box-shadow: 0 0 0 3px var(--ink); line-height: 0; }
+    .feature-shot img { width: 100%; height: auto; display: block; }
+    .feature-shot:hover img { filter: saturate(1.15); }
+    .feature-body { position: relative; }
+    .feature-body h3 { font-weight: 400; font-size: 1.8rem; line-height: 1.2; margin: 10px 0 8px; }
+    .feature-body p { margin: 0 0 12px; color: var(--ink-2); }
+    .feature-body .tag { background: #def3c9; color: var(--leaf-2); box-shadow: 0 0 0 2px #b5dc94; font-size: .85rem; }
+    .feature-body .small { margin: 8px 0 0; }
+    .chips { list-style: none; padding: 0; margin: 0 0 16px; display: flex; flex-wrap: wrap; gap: 8px; }
+    .chips li { font-size: .82rem; padding: 0 8px; background: var(--paper-2); box-shadow: 0 0 0 2px var(--shade); color: var(--ink-2); }
+    .hanko { position: absolute; top: -8px; right: 0; writing-mode: vertical-rl; letter-spacing: .1em; font-size: .95rem; line-height: 1.1; color: #d2452f; border: 3px solid #d2452f; padding: 6px 3px; transform: rotate(6deg); opacity: .9; }
+    .slot .art.shot { height: auto; padding: 0; background: none; box-shadow: 0 0 0 3px var(--ink); line-height: 0; }
+    .slot .art.shot img { width: 100%; height: auto; display: block; }
     .menu { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; margin: 64px 4px 0; }
     .menu-item { display: flex; align-items: center; gap: 18px; padding: 18px 20px; text-decoration: none; transition: transform .15s ease; }
     .menu-item:hover { transform: translateY(-3px); }
@@ -177,7 +196,7 @@
     .foot { background: #5f9b44; color: #f2fbe6; }
     .foot .wrap { padding: 18px 0 24px; display: flex; justify-content: space-between; gap: 18px; flex-wrap: wrap; font-size: .95rem; }
 
-    @media (max-width: 860px) { .menu { grid-template-columns: minmax(0, 1fr); gap: 24px; } .slots { grid-template-columns: 1fr; gap: 36px; } .about, .tip { grid-template-columns: 1fr; gap: 36px; } }
+    @media (max-width: 860px) { .feature { grid-template-columns: 1fr; gap: 20px; } .menu { grid-template-columns: minmax(0, 1fr); gap: 24px; } .slots { grid-template-columns: 1fr; gap: 36px; } .about, .tip { grid-template-columns: 1fr; gap: 36px; } }
     @media (max-width: 640px) {
       .wrap { width: calc(100% - 32px); } header { padding: 20px 0; flex-wrap: wrap; gap: 10px 20px; } .brand { font-size: 1.3rem; } .brand .chev { width: 15px; height: 21px; }
       .brand .cur { width: 13px; height: 5px; margin-bottom: 2px; } nav { gap: 14px; font-size: .95rem; } nav a { padding-left: 0; } nav a::before { display: none; }
@@ -188,7 +207,7 @@
     }
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
-      .cloud, .chick, .robot, .walk, .sway, .stars, .slot .sprite, .robot-big, .sec .arrow, .status .heart, .eye, .chest { animation: none; }
+      .cloud, .petal, .chick, .robot, .walk, .sway, .stars, .slot .sprite, .robot-big, .sec .arrow, .status .heart, .eye, .chest { animation: none; }
       .brand .chev { transition: none; } .menu-item, .mi-go { transition: none; }
     }
   </style>
@@ -202,7 +221,7 @@
     <main>
       <section>
         <h1 class="sec page-title"><span class="arrow" aria-hidden="true">▶</span>Farm Journal <span class="ja" lang="ja">日記</span></h1><p class="lede">What's been happening on the farm, newest first.</p>
-        <div class="journal px"><ol class="log"><li><time datetime="2026-10-07">Oct 7, 2026</time><p>Rebuilt the whole site as a pixel farm 🌱 Hired a robot farmer. His salary? Your tips.</p></li><li><time datetime="2026-10-06">Oct 6, 2026</time><p>New logo day — the &gt; and the _ now move. Took the GitHub links off too.</p></li></ol></div>
+        <div class="journal px"><ol class="log"><li><time datetime="2026-10-07">Oct 7, 2026</time><p>First harvest! 🚆 TengokTren is live — watch trains move through a 3D Klang Valley.</p></li><li><time datetime="2026-10-07">Oct 7, 2026</time><p>Rebuilt the whole site as a pixel farm 🌱 Hired a robot farmer. His salary? Your tips.</p></li><li><time datetime="2026-10-06">Oct 6, 2026</time><p>New logo day — the &gt; and the _ now move. Took the GitHub links off too.</p></li></ol></div>
       </section>
     </main>
   </div>
@@ -264,7 +283,7 @@
 
       var box = document.querySelector(".dialog");
       if (!box) return;
-      var lines = ["Hey, welcome to weishenlabs! ようこそ", "I'm Wei Shen. Studied accounting, then got hooked on AI 😅", "This is my tiny farm of side projects. Nothing's fully grown yet… 🌱", "The robot farmer does most of the work. Tip him if you like ☕🤖"];
+      var lines = ["Hey, welcome to weishenlabs! ようこそ", "I'm Wei Shen. Studied accounting, then got hooked on AI 😅", "My first harvest is in: TengokTren 🚆 Go watch some trains!", "The robot farmer does most of the work. Tip him if you like ☕🤖"];
       var out = box.querySelector(".typed");
       var i = 0, pos = 0, timer = null;
       function type() {

@@ -117,8 +117,10 @@ def scene():
         sky.append(f'<g class="cloud c{i+1}">{sprite(CLOUD, {"W": "#ffffff", "S": "#dbe9f5"}, x, y)}</g>')
 
     land = [hills(56, 6, 23, 0, 4, 9, 1, "#a9d38c"), hills(68, 5, 31, 2, 3, 13, 0, "#86c065")]
-    for x, y in [(86, 66), (238, 64), (34, 67)]:
+    land.append(sprite(TORII, TORII_PAL, 268, 61))
+    for x, y in [(86, 66), (238, 64)]:
         land.append(sprite(TREE, TREE_PAL, x, y))
+    land.append(sprite(TREE, SAKURA_PAL, 34, 67))
     land.append(sprite(BARN, BARN_PAL, 208, 72))
     land.append('<rect x="0" y="80" width="320" height="20" fill="#79b555"/>')
     tufts = "".join(f'<rect x="{x}" y="{y}" width="1" height="1"/><rect x="{x+2}" y="{y}" width="1" height="1"/><rect x="{x+1}" y="{y+1}" width="1" height="1"/>'
@@ -136,6 +138,9 @@ def scene():
     land.append("".join(fence))
     land.append(f'<g class="chick"><g class="walk">{sprite(CHICK, CHICK_PAL, 86, 88)}</g></g>')
     land.append(f'<g class="robot"><g class="walk">{sprite(ROBOT, ROBOT_PAL, 140, 86)}</g></g>')
+    petals = "".join(f'<rect class="petal p{i}" x="{x}" y="{y}" width="{w}" height="1" fill="#f6bfd0"/>'
+                     for i, (x, y, w) in enumerate([(40, 64, 2), (52, 60, 1), (30, 70, 1), (60, 66, 2), (46, 58, 1), (36, 62, 2)]))
+    land.append(f'<g class="petals">{petals}</g>')
     lights = '<g class="lights"><rect x="211" y="77" width="2" height="2"/><rect x="219" y="77" width="2" height="2"/></g>'
     return (f'<svg class="scene" viewBox="0 0 320 100" preserveAspectRatio="xMidYMax slice" shape-rendering="crispEdges" aria-hidden="true">'
             f'<g class="sky">{"".join(sky)}</g><g class="land">{"".join(land)}</g>{lights}</svg>')
@@ -153,6 +158,9 @@ def nice_date(iso):
 
 
 STAGES = {"seed": ("🌰 Seed", ""), "sprout": ("🌱 Sprout", "sprout"), "harvest": ("🌾 Harvest", "live")}
+SAKURA_PAL = {"L": "#f6bfd0", "D": "#e88aa8", "T": "#7a5230"}
+TORII = ["RRRRRRRRRRRRRRR", ".KKKKKKKKKKKKK.", "...R.......R...", ".RRRRRRRRRRRRR.", "...R.......R...", "...R.......R...", "...R.......R...", "...R.......R...", "...R.......R...", "..KK.......KK.."]
+TORII_PAL = {"R": "#d2452f", "K": "#5a2a20"}
 BOOK = ["KKKKKKKKK.", "KBBBBBBBK.", "KBWWWWWBKK", "KBBBBBBBKK", "KBWWWWBBKK", "KBBBBBBBKK", "KBBBBBBBKK", "KKKKKKKKKK", ".KWWWWWWWK", "..KKKKKKKK"]
 CUP = ["...W.W.....", "....W.W....", "...W.W.....", "KKKKKKKKK..", "KCCCCCCCKKK", "KCCRRCCCK.K", "KCRRRRCCK.K", "KCCRRCCCKKK", "KCCCCCCCK..", ".KCCCCCK...", "..KKKKK...."]
 CUP_PAL = {"K": INK, "C": "#fffaf0", "R": "#e2553f", "W": "#c9b592"}
@@ -181,11 +189,13 @@ def project_cards():
     for i, a in enumerate(C["projects"], 1):
         label, cls = STAGES[a["stage"]]
         art = icon(PACKET, {"K": INK, "P": PACKET_COLORS.get(a.get("color"), "#f2c86b")}, 5)
+        if a.get("image"):
+            art = f'<img src="{a["image"]}" alt="Screenshot of {e(a["title"])}" loading="lazy">'
         title = e(a["title"])
         if a.get("url"):
             title = f'<a href="{a["url"]}">{title}</a>'
         cards.append(f'''<article class="slot px {cls}">
-            <div class="art">{art}</div>
+            <div class="art{' shot' if a.get('image') else ''}">{art}</div>
             <div class="meta"><span>No.{i:02d}</span><span class="tag">{label}</span></div>
             <h3>{title}</h3>
             <p>{e(a["text"])}</p>
@@ -196,6 +206,30 @@ def project_cards():
 def journal_list(items):
     rows = "".join(f'<li><time datetime="{j["date"]}">{nice_date(j["date"])}</time><p>{e(j["text"])}</p></li>' for j in items)
     return f'<ol class="log">{rows}</ol>'
+
+
+def featured():
+    live = [p for p in C["projects"] if p["stage"] == "harvest"]
+    if not live:
+        return ""
+    p = live[0]
+    tags = "".join(f"<li>{e(t)}</li>" for t in p.get("tags", []))
+    host = p["url"].replace("https://", "")
+    return f'''<section class="harvest" aria-labelledby="harvest-heading">
+        <h2 class="sec" id="harvest-heading"><span class="arrow" aria-hidden="true">▶</span>First harvest <span class="ja" lang="ja">初収穫</span></h2>
+        <article class="feature px">
+          <a class="feature-shot" href="{p["url"]}"><img src="{p["image"]}" alt="TengokTren showing a train moving through a 3D map of Kuala Lumpur" width="704" height="396"></a>
+          <div class="feature-body">
+            <span class="hanko" lang="ja" aria-hidden="true">初収穫</span>
+            <span class="tag">🌾 Harvest · Live now</span>
+            <h3>{e(p["title"])}</h3>
+            <p>{e(p["text"])}</p>
+            <ul class="chips">{tags}</ul>
+            <a class="btn" href="{p["url"]}">Watch the trains ▶</a>
+            <p class="small">{host}</p>
+          </div>
+        </article>
+      </section>'''
 
 
 def home():
@@ -232,8 +266,9 @@ def home():
         </div>
       </section>
 
+      {featured()}
+
       <nav class="menu" aria-label="Explore">{menu}</nav>
-      <p class="latest"><span class="new">LIVE</span> My first project: <a href="https://tengoktren.weishenlabs.dev">TengokTren — watch the trains ▶</a></p>
       <p class="latest"><span class="new">NEW</span> <time datetime="{latest["date"]}">{nice_date(latest["date"])}</time> — {e(latest["text"])} <a href="/journal/">Read the journal ▶</a></p>'''
 
 
