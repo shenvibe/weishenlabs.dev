@@ -209,26 +209,40 @@ def journal_list(items):
 
 
 def featured():
-    live = [p for p in C["projects"] if p["stage"] == "harvest"]
+    """Live projects as a left/right carousel, newest first."""
+    live = [p for p in C["projects"] if p["stage"] == "harvest"][::-1]
     if not live:
         return ""
-    p = live[0]
-    tags = "".join(f"<li>{e(t)}</li>" for t in p.get("tags", []))
-    host = p["url"].replace("https://", "")
+    cards = []
+    for i, p in enumerate(live):
+        tags = "".join(f"<li>{e(t)}</li>" for t in p.get("tags", []))
+        host = p["url"].replace("https://", "")
+        hanko = f'<span class="hanko" lang="ja" aria-hidden="true">{p["hanko"]}</span>' if p.get("hanko") else ""
+        cards.append(f'''<article class="feature px" id="harvest-{i+1}" aria-roledescription="slide" aria-label="{i+1} of {len(live)}: {e(p["title"])}">
+            <a class="feature-shot" href="{p["url"]}" tabindex="-1"><img src="{p["image"]}" alt="{e(p.get("alt", p["title"]))}" width="704" height="396"{' loading="lazy"' if i else ''}></a>
+            <div class="feature-body">
+              {hanko}
+              <span class="tag">🌾 Harvest · Live now</span>
+              <h3>{e(p["title"])}</h3>
+              <p>{e(p["text"])}</p>
+              <ul class="chips">{tags}</ul>
+              <a class="btn" href="{p["url"]}">{e(p.get("cta", "Open ▶"))}</a>
+              <p class="small">{host}</p>
+            </div>
+          </article>''')
+    controls = ""
+    if len(live) > 1:
+        dots = "".join(f'<a class="dot" href="#harvest-{i+1}" aria-label="Show {e(p["title"])}"{" aria-current=\"true\"" if i == 0 else ""}></a>' for i, p in enumerate(live))
+        controls = (f'<div class="carousel-nav"><button class="car-btn prev" type="button" aria-label="Previous project" disabled>◀</button>'
+                    f'<div class="dots">{dots}</div><button class="car-btn next" type="button" aria-label="Next project">▶</button></div>')
     return f'''<section class="harvest" aria-labelledby="harvest-heading">
-        <h2 class="sec" id="harvest-heading"><span class="arrow" aria-hidden="true">▶</span>First harvest <span class="ja" lang="ja">初収穫</span></h2>
-        <article class="feature px">
-          <a class="feature-shot" href="{p["url"]}"><img src="{p["image"]}" alt="TengokTren showing a train moving through a 3D map of Kuala Lumpur" width="704" height="396"></a>
-          <div class="feature-body">
-            <span class="hanko" lang="ja" aria-hidden="true">初収穫</span>
-            <span class="tag">🌾 Harvest · Live now</span>
-            <h3>{e(p["title"])}</h3>
-            <p>{e(p["text"])}</p>
-            <ul class="chips">{tags}</ul>
-            <a class="btn" href="{p["url"]}">Watch the trains ▶</a>
-            <p class="small">{host}</p>
+        <h2 class="sec" id="harvest-heading"><span class="arrow" aria-hidden="true">▶</span>Fresh harvest <span class="ja" lang="ja">収穫</span></h2>
+        <div class="carousel" aria-roledescription="carousel" aria-labelledby="harvest-heading">
+          <div class="track" tabindex="0">
+          {"".join(cards)}
           </div>
-        </article>
+          {controls}
+        </div>
       </section>'''
 
 

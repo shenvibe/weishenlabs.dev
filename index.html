@@ -174,6 +174,19 @@
     .feature-body .small { margin: 8px 0 0; }
     .chips { list-style: none; padding: 0; margin: 0 0 16px; display: flex; flex-wrap: wrap; gap: 8px; }
     .chips li { font-size: .82rem; padding: 0 8px; background: var(--paper-2); box-shadow: 0 0 0 2px var(--shade); color: var(--ink-2); }
+    .carousel { position: relative; }
+    .track { display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; overscroll-behavior-x: contain; scrollbar-width: none; padding: 6px 4px 10px; margin: 12px -4px 0; }
+    .track::-webkit-scrollbar { display: none; }
+    .track:focus-visible { outline: 3px dashed var(--leaf-2); outline-offset: 4px; }
+    .track .feature { flex: 0 0 calc(100% - 56px); margin: 6px 0 0; scroll-snap-align: start; }
+    .track .feature:only-child { flex-basis: calc(100% - 8px); }
+    .carousel-nav { display: flex; align-items: center; justify-content: center; gap: 18px; margin-top: 14px; }
+    .car-btn { font: inherit; width: 40px; height: 36px; cursor: pointer; background: var(--card); color: var(--ink); border: 0; box-shadow: 0 -3px 0 0 var(--ink), 0 3px 0 0 var(--ink), -3px 0 0 0 var(--ink), 3px 0 0 0 var(--ink); }
+    .car-btn:hover:not(:disabled) { background: var(--lime); } .car-btn:active:not(:disabled) { transform: translateY(2px); }
+    .car-btn:disabled { opacity: .35; cursor: default; }
+    .dots { display: flex; gap: 10px; }
+    .dot { width: 12px; height: 12px; background: var(--shade); box-shadow: 0 0 0 2px var(--ink-2); }
+    .dot[aria-current="true"] { background: var(--lime); box-shadow: 0 0 0 2px var(--leaf-2); width: 28px; }
     .hanko { position: absolute; top: -8px; right: 0; writing-mode: vertical-rl; letter-spacing: .1em; font-size: .95rem; line-height: 1.1; color: #d2452f; border: 3px solid #d2452f; padding: 6px 3px; transform: rotate(6deg); opacity: .9; }
     .slot .art.shot { height: auto; padding: 0; background: none; box-shadow: 0 0 0 3px var(--ink); line-height: 0; }
     .slot .art.shot img { width: 100%; height: auto; display: block; }
@@ -201,6 +214,7 @@
       .wrap { width: calc(100% - 32px); } header { padding: 20px 0; flex-wrap: wrap; gap: 10px 20px; } .brand { font-size: 1.3rem; } .brand .chev { width: 15px; height: 21px; }
       .brand .cur { width: 13px; height: 5px; margin-bottom: 2px; } nav { gap: 14px; font-size: .95rem; } nav a { padding-left: 0; } nav a::before { display: none; }
       .screen { padding: 8px; } .view { height: 210px; } .hud { top: 8px; left: 8px; font-size: .8rem; padding: 4px 10px; }
+      .track .feature { flex-basis: calc(100% - 36px); padding: 16px; } .track { gap: 14px; }
       .dialog { padding: 20px 18px 26px; min-height: 136px; } .dialog .typed { font-size: 1.02rem; } .sec { margin-top: 64px; font-size: 1.4rem; }
       .stages { white-space: normal; display: block; } .log li { grid-template-columns: 1fr; } .journal { padding: 4px 18px 14px; }
       .tip-pitch { flex-direction: column; padding: 22px; } .hint { display: block; } .menu-item { gap: 14px; padding: 14px 16px; } .mi-art { width: 64px; height: 64px; } .mi-art svg { max-width: 48px; height: auto; }
@@ -208,7 +222,7 @@
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       .cloud, .petal, .chick, .robot, .walk, .sway, .stars, .slot .sprite, .robot-big, .sec .arrow, .status .heart, .eye, .chest { animation: none; }
-      .brand .chev { transition: none; } .menu-item, .mi-go { transition: none; }
+      .brand .chev { transition: none; } .menu-item, .mi-go { transition: none; } .track { scroll-behavior: auto; }
     }
   </style>
 </head>
@@ -237,23 +251,39 @@
       </section>
 
       <section class="harvest" aria-labelledby="harvest-heading">
-        <h2 class="sec" id="harvest-heading"><span class="arrow" aria-hidden="true">▶</span>First harvest <span class="ja" lang="ja">初収穫</span></h2>
-        <article class="feature px">
-          <a class="feature-shot" href="https://tengoktren.weishenlabs.dev"><img src="/assets/projects/tengoktren.jpg" alt="TengokTren showing a train moving through a 3D map of Kuala Lumpur" width="704" height="396"></a>
-          <div class="feature-body">
-            <span class="hanko" lang="ja" aria-hidden="true">初収穫</span>
-            <span class="tag">🌾 Harvest · Live now</span>
-            <h3>TengokTren</h3>
-            <p>Watch trains move through a 3D Klang Valley. My first launched project — made for the joy of watching trains.</p>
-            <ul class="chips"><li>3D map</li><li>Klang Valley trains</li><li>EN · BM · 中文</li></ul>
-            <a class="btn" href="https://tengoktren.weishenlabs.dev">Watch the trains ▶</a>
-            <p class="small">tengoktren.weishenlabs.dev</p>
+        <h2 class="sec" id="harvest-heading"><span class="arrow" aria-hidden="true">▶</span>Fresh harvest <span class="ja" lang="ja">収穫</span></h2>
+        <div class="carousel" aria-roledescription="carousel" aria-labelledby="harvest-heading">
+          <div class="track" tabindex="0">
+          <article class="feature px" id="harvest-1" aria-roledescription="slide" aria-label="1 of 2: LIFE.EXE">
+            <a class="feature-shot" href="https://life.weishenlabs.dev" tabindex="-1"><img src="/assets/projects/life-exe.jpg" alt="LIFE.EXE home screen with a pixel-art Kuala Lumpur street" width="704" height="396"></a>
+            <div class="feature-body">
+              <span class="hanko" lang="ja" aria-hidden="true">新作</span>
+              <span class="tag">🌾 Harvest · Live now</span>
+              <h3>LIFE.EXE</h3>
+              <p>A 3-minute Malaysian life simulator. Every choice is a gamble — survive to 65 if you can, then challenge your friends.</p>
+              <ul class="chips"><li>Pixel art</li><li>Survive to 65</li><li>EN · BM · 中文</li></ul>
+              <a class="btn" href="https://life.weishenlabs.dev">Start your life ▶</a>
+              <p class="small">life.weishenlabs.dev</p>
+            </div>
+          </article><article class="feature px" id="harvest-2" aria-roledescription="slide" aria-label="2 of 2: TengokTren">
+            <a class="feature-shot" href="https://tengoktren.weishenlabs.dev" tabindex="-1"><img src="/assets/projects/tengoktren.jpg" alt="TengokTren showing a train moving through a 3D map of Kuala Lumpur" width="704" height="396" loading="lazy"></a>
+            <div class="feature-body">
+              <span class="hanko" lang="ja" aria-hidden="true">初収穫</span>
+              <span class="tag">🌾 Harvest · Live now</span>
+              <h3>TengokTren</h3>
+              <p>Watch trains move through a 3D Klang Valley. My first launched project — made for the joy of watching trains.</p>
+              <ul class="chips"><li>3D map</li><li>Klang Valley trains</li><li>EN · BM · 中文</li></ul>
+              <a class="btn" href="https://tengoktren.weishenlabs.dev">Watch the trains ▶</a>
+              <p class="small">tengoktren.weishenlabs.dev</p>
+            </div>
+          </article>
           </div>
-        </article>
+          <div class="carousel-nav"><button class="car-btn prev" type="button" aria-label="Previous project" disabled>◀</button><div class="dots"><a class="dot" href="#harvest-1" aria-label="Show LIFE.EXE" aria-current="true"></a><a class="dot" href="#harvest-2" aria-label="Show TengokTren"></a></div><button class="car-btn next" type="button" aria-label="Next project">▶</button></div>
+        </div>
       </section>
 
       <nav class="menu" aria-label="Explore"><a class="menu-item px" href="/projects/"><span class="mi-art"><svg class="sprite" viewBox="0 0 11 12" width="44" height="48" shape-rendering="crispEdges" aria-hidden="true"><g><rect x="1" y="0" width="9" height="1" fill="#3b2f27"/><rect x="0" y="1" width="1" height="1" fill="#3b2f27"/><rect x="1" y="1" width="9" height="1" fill="#f2c86b"/><rect x="10" y="1" width="1" height="1" fill="#3b2f27"/><rect x="0" y="2" width="1" height="1" fill="#3b2f27"/><rect x="1" y="2" width="9" height="1" fill="#f2c86b"/><rect x="10" y="2" width="1" height="1" fill="#3b2f27"/><rect x="0" y="3" width="1" height="1" fill="#3b2f27"/><rect x="1" y="3" width="3" height="1" fill="#f2c86b"/><rect x="4" y="3" width="3" height="1" fill="#3b2f27"/><rect x="7" y="3" width="3" height="1" fill="#f2c86b"/><rect x="10" y="3" width="1" height="1" fill="#3b2f27"/><rect x="0" y="4" width="1" height="1" fill="#3b2f27"/><rect x="1" y="4" width="2" height="1" fill="#f2c86b"/><rect x="3" y="4" width="1" height="1" fill="#3b2f27"/><rect x="4" y="4" width="3" height="1" fill="#f2c86b"/><rect x="7" y="4" width="1" height="1" fill="#3b2f27"/><rect x="8" y="4" width="2" height="1" fill="#f2c86b"/><rect x="10" y="4" width="1" height="1" fill="#3b2f27"/><rect x="0" y="5" width="1" height="1" fill="#3b2f27"/><rect x="1" y="5" width="6" height="1" fill="#f2c86b"/><rect x="7" y="5" width="1" height="1" fill="#3b2f27"/><rect x="8" y="5" width="2" height="1" fill="#f2c86b"/><rect x="10" y="5" width="1" height="1" fill="#3b2f27"/><rect x="0" y="6" width="1" height="1" fill="#3b2f27"/><rect x="1" y="6" width="5" height="1" fill="#f2c86b"/><rect x="6" y="6" width="1" height="1" fill="#3b2f27"/><rect x="7" y="6" width="3" height="1" fill="#f2c86b"/><rect x="10" y="6" width="1" height="1" fill="#3b2f27"/><rect x="0" y="7" width="1" height="1" fill="#3b2f27"/><rect x="1" y="7" width="4" height="1" fill="#f2c86b"/><rect x="5" y="7" width="1" height="1" fill="#3b2f27"/><rect x="6" y="7" width="4" height="1" fill="#f2c86b"/><rect x="10" y="7" width="1" height="1" fill="#3b2f27"/><rect x="0" y="8" width="1" height="1" fill="#3b2f27"/><rect x="1" y="8" width="9" height="1" fill="#f2c86b"/><rect x="10" y="8" width="1" height="1" fill="#3b2f27"/><rect x="0" y="9" width="1" height="1" fill="#3b2f27"/><rect x="1" y="9" width="4" height="1" fill="#f2c86b"/><rect x="5" y="9" width="1" height="1" fill="#3b2f27"/><rect x="6" y="9" width="4" height="1" fill="#f2c86b"/><rect x="10" y="9" width="1" height="1" fill="#3b2f27"/><rect x="0" y="10" width="1" height="1" fill="#3b2f27"/><rect x="1" y="10" width="9" height="1" fill="#f2c86b"/><rect x="10" y="10" width="1" height="1" fill="#3b2f27"/><rect x="1" y="11" width="9" height="1" fill="#3b2f27"/></g></svg></span><span class="mi-text"><span class="mi-label">Projects <span class="ja" lang="ja">プロジェクト</span></span><span class="mi-blurb">What's growing on the farm</span></span><span class="mi-go" aria-hidden="true">▶</span></a><a class="menu-item px" href="/journal/"><span class="mi-art"><svg class="sprite" viewBox="0 0 10 10" width="40" height="40" shape-rendering="crispEdges" aria-hidden="true"><g><rect x="0" y="0" width="9" height="1" fill="#3b2f27"/><rect x="0" y="1" width="1" height="1" fill="#3b2f27"/><rect x="1" y="1" width="7" height="1" fill="#c8553d"/><rect x="8" y="1" width="1" height="1" fill="#3b2f27"/><rect x="0" y="2" width="1" height="1" fill="#3b2f27"/><rect x="1" y="2" width="1" height="1" fill="#c8553d"/><rect x="2" y="2" width="5" height="1" fill="#f3e2b5"/><rect x="7" y="2" width="1" height="1" fill="#c8553d"/><rect x="8" y="2" width="2" height="1" fill="#3b2f27"/><rect x="0" y="3" width="1" height="1" fill="#3b2f27"/><rect x="1" y="3" width="7" height="1" fill="#c8553d"/><rect x="8" y="3" width="2" height="1" fill="#3b2f27"/><rect x="0" y="4" width="1" height="1" fill="#3b2f27"/><rect x="1" y="4" width="1" height="1" fill="#c8553d"/><rect x="2" y="4" width="4" height="1" fill="#f3e2b5"/><rect x="6" y="4" width="2" height="1" fill="#c8553d"/><rect x="8" y="4" width="2" height="1" fill="#3b2f27"/><rect x="0" y="5" width="1" height="1" fill="#3b2f27"/><rect x="1" y="5" width="7" height="1" fill="#c8553d"/><rect x="8" y="5" width="2" height="1" fill="#3b2f27"/><rect x="0" y="6" width="1" height="1" fill="#3b2f27"/><rect x="1" y="6" width="7" height="1" fill="#c8553d"/><rect x="8" y="6" width="2" height="1" fill="#3b2f27"/><rect x="0" y="7" width="10" height="1" fill="#3b2f27"/><rect x="1" y="8" width="1" height="1" fill="#3b2f27"/><rect x="2" y="8" width="7" height="1" fill="#f3e2b5"/><rect x="9" y="8" width="1" height="1" fill="#3b2f27"/><rect x="2" y="9" width="8" height="1" fill="#3b2f27"/></g></svg></span><span class="mi-text"><span class="mi-label">Journal <span class="ja" lang="ja">日記</span></span><span class="mi-blurb">Little updates, newest first</span></span><span class="mi-go" aria-hidden="true">▶</span></a><a class="menu-item px" href="/tip/"><span class="mi-art"><svg class="sprite" viewBox="0 0 10 13" width="40" height="52" shape-rendering="crispEdges" aria-hidden="true"><g><rect x="3" y="0" width="4" height="1" fill="#e8c25a"/><rect x="2" y="1" width="6" height="1" fill="#e8c25a"/><rect x="0" y="2" width="2" height="1" fill="#e8c25a"/><rect x="2" y="2" width="6" height="1" fill="#c8553d"/><rect x="8" y="2" width="2" height="1" fill="#e8c25a"/><rect x="2" y="3" width="6" height="1" fill="#c9ccd1"/><rect x="2" y="4" width="1" height="1" fill="#c9ccd1"/><rect x="3" y="4" width="1" height="1" class="eye"/><rect x="4" y="4" width="2" height="1" fill="#c9ccd1"/><rect x="6" y="4" width="1" height="1" class="eye"/><rect x="7" y="4" width="1" height="1" fill="#c9ccd1"/><rect x="2" y="5" width="6" height="1" fill="#c9ccd1"/><rect x="3" y="6" width="1" height="1" fill="#c9ccd1"/><rect x="4" y="6" width="2" height="1" fill="#8a9099"/><rect x="6" y="6" width="1" height="1" fill="#c9ccd1"/><rect x="1" y="7" width="8" height="1" fill="#7f97ad"/><rect x="0" y="8" width="1" height="1" fill="#c9ccd1"/><rect x="1" y="8" width="3" height="1" fill="#7f97ad"/><rect x="4" y="8" width="2" height="1" class="chest"/><rect x="6" y="8" width="3" height="1" fill="#7f97ad"/><rect x="9" y="8" width="1" height="1" fill="#c9ccd1"/><rect x="0" y="9" width="1" height="1" fill="#c9ccd1"/><rect x="2" y="9" width="6" height="1" fill="#7f97ad"/><rect x="9" y="9" width="1" height="1" fill="#c9ccd1"/><rect x="2" y="10" width="6" height="1" fill="#7f97ad"/><rect x="2" y="11" width="1" height="1" fill="#3b2f27"/><rect x="7" y="11" width="1" height="1" fill="#3b2f27"/><rect x="1" y="12" width="2" height="1" fill="#3b2f27"/><rect x="7" y="12" width="2" height="1" fill="#3b2f27"/></g></svg></span><span class="mi-text"><span class="mi-label">Tip jar <span class="ja" lang="ja">チップ</span></span><span class="mi-blurb">Feed the robot farmer ☕</span></span><span class="mi-go" aria-hidden="true">▶</span></a><a class="menu-item px" href="/about/"><span class="mi-art"><svg class="sprite" viewBox="0 0 7 6" width="35" height="30" shape-rendering="crispEdges" aria-hidden="true"><g><rect x="1" y="0" width="2" height="1" fill="#3b2f27"/><rect x="4" y="0" width="2" height="1" fill="#3b2f27"/><rect x="0" y="1" width="1" height="1" fill="#3b2f27"/><rect x="1" y="1" width="2" height="1" fill="#e2553f"/><rect x="3" y="1" width="1" height="1" fill="#3b2f27"/><rect x="4" y="1" width="2" height="1" fill="#e2553f"/><rect x="6" y="1" width="1" height="1" fill="#3b2f27"/><rect x="0" y="2" width="1" height="1" fill="#3b2f27"/><rect x="1" y="2" width="5" height="1" fill="#e2553f"/><rect x="6" y="2" width="1" height="1" fill="#3b2f27"/><rect x="1" y="3" width="1" height="1" fill="#3b2f27"/><rect x="2" y="3" width="3" height="1" fill="#e2553f"/><rect x="5" y="3" width="1" height="1" fill="#3b2f27"/><rect x="2" y="4" width="1" height="1" fill="#3b2f27"/><rect x="3" y="4" width="1" height="1" fill="#e2553f"/><rect x="4" y="4" width="1" height="1" fill="#3b2f27"/><rect x="3" y="5" width="1" height="1" fill="#3b2f27"/></g></svg></span><span class="mi-text"><span class="mi-label">About <span class="ja" lang="ja">自己紹介</span></span><span class="mi-blurb">Who's behind all this</span></span><span class="mi-go" aria-hidden="true">▶</span></a></nav>
-      <p class="latest"><span class="new">NEW</span> <time datetime="2026-10-07">Oct 7, 2026</time> — First harvest! 🚆 TengokTren is live — watch trains move through a 3D Klang Valley. <a href="/journal/">Read the journal ▶</a></p>
+      <p class="latest"><span class="new">NEW</span> <time datetime="2026-10-08">Oct 8, 2026</time> — Second harvest! 🎲 LIFE.EXE is live — one life, infinite bad decisions. Can you make it to 65? <a href="/journal/">Read the journal ▶</a></p>
     </main>
   </div>
 
@@ -288,6 +318,33 @@
           word.textContent = full.slice(0, ++n);
           if (n < full.length) setTimeout(step, 55 + Math.random() * 45); else brand.classList.remove("typing");
         })();
+      }
+
+      var track = document.querySelector(".carousel .track");
+      if (track && track.children.length > 1) {
+        var slides = Array.prototype.slice.call(track.children);
+        var dots = document.querySelectorAll(".carousel .dot");
+        var prev = document.querySelector(".carousel .prev"), next = document.querySelector(".carousel .next");
+        var current = function () {
+          var best = 0, dist = Infinity;
+          slides.forEach(function (s, i) { var d = Math.abs(s.offsetLeft - track.offsetLeft - track.scrollLeft); if (d < dist) { dist = d; best = i; } });
+          return best;
+        };
+        var go = function (i) { i = Math.max(0, Math.min(slides.length - 1, i)); track.scrollTo({ left: slides[i].offsetLeft - track.offsetLeft }); };
+        var sync = function () {
+          var i = current();
+          dots.forEach(function (d, j) { if (j === i) d.setAttribute("aria-current", "true"); else d.removeAttribute("aria-current"); });
+          prev.disabled = i === 0; next.disabled = i === slides.length - 1;
+        };
+        var raf = 0;
+        track.addEventListener("scroll", function () { cancelAnimationFrame(raf); raf = requestAnimationFrame(sync); }, { passive: true });
+        prev.addEventListener("click", function () { go(current() - 1); });
+        next.addEventListener("click", function () { go(current() + 1); });
+        dots.forEach(function (d, j) { d.addEventListener("click", function (ev) { ev.preventDefault(); go(j); }); });
+        track.addEventListener("keydown", function (ev) {
+          if (ev.key === "ArrowRight") { ev.preventDefault(); go(current() + 1); }
+          if (ev.key === "ArrowLeft") { ev.preventDefault(); go(current() - 1); }
+        });
       }
 
       var tabs = document.querySelectorAll('[role="tab"]');

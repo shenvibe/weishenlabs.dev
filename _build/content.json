@@ -8,6 +8,10 @@
   ],
   "journal": [
     {
+      "date": "2026-10-08",
+      "text": "Second harvest! 🎲 LIFE.EXE is live — one life, infinite bad decisions. Can you make it to 65?"
+    },
+    {
       "date": "2026-10-07",
       "text": "First harvest! 🚆 TengokTren is live — watch trains move through a 3D Klang Valley."
     },
@@ -62,7 +66,26 @@
         "3D map",
         "Klang Valley trains",
         "EN · BM · 中文"
-      ]
+      ],
+      "cta": "Watch the trains ▶",
+      "alt": "TengokTren showing a train moving through a 3D map of Kuala Lumpur",
+      "hanko": "初収穫"
+    },
+    {
+      "stage": "harvest",
+      "title": "LIFE.EXE",
+      "text": "A 3-minute Malaysian life simulator. Every choice is a gamble — survive to 65 if you can, then challenge your friends.",
+      "color": "pink",
+      "url": "https://life.weishenlabs.dev",
+      "image": "/assets/projects/life-exe.jpg",
+      "tags": [
+        "Pixel art",
+        "Survive to 65",
+        "EN · BM · 中文"
+      ],
+      "cta": "Start your life ▶",
+      "alt": "LIFE.EXE home screen with a pixel-art Kuala Lumpur street",
+      "hanko": "新作"
     },
     {
       "stage": "seed",

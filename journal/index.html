@@ -174,6 +174,19 @@
     .feature-body .small { margin: 8px 0 0; }
     .chips { list-style: none; padding: 0; margin: 0 0 16px; display: flex; flex-wrap: wrap; gap: 8px; }
     .chips li { font-size: .82rem; padding: 0 8px; background: var(--paper-2); box-shadow: 0 0 0 2px var(--shade); color: var(--ink-2); }
+    .carousel { position: relative; }
+    .track { display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; overscroll-behavior-x: contain; scrollbar-width: none; padding: 6px 4px 10px; margin: 12px -4px 0; }
+    .track::-webkit-scrollbar { display: none; }
+    .track:focus-visible { outline: 3px dashed var(--leaf-2); outline-offset: 4px; }
+    .track .feature { flex: 0 0 calc(100% - 56px); margin: 6px 0 0; scroll-snap-align: start; }
+    .track .feature:only-child { flex-basis: calc(100% - 8px); }
+    .carousel-nav { display: flex; align-items: center; justify-content: center; gap: 18px; margin-top: 14px; }
+    .car-btn { font: inherit; width: 40px; height: 36px; cursor: pointer; background: var(--card); color: var(--ink); border: 0; box-shadow: 0 -3px 0 0 var(--ink), 0 3px 0 0 var(--ink), -3px 0 0 0 var(--ink), 3px 0 0 0 var(--ink); }
+    .car-btn:hover:not(:disabled) { background: var(--lime); } .car-btn:active:not(:disabled) { transform: translateY(2px); }
+    .car-btn:disabled { opacity: .35; cursor: default; }
+    .dots { display: flex; gap: 10px; }
+    .dot { width: 12px; height: 12px; background: var(--shade); box-shadow: 0 0 0 2px var(--ink-2); }
+    .dot[aria-current="true"] { background: var(--lime); box-shadow: 0 0 0 2px var(--leaf-2); width: 28px; }
     .hanko { position: absolute; top: -8px; right: 0; writing-mode: vertical-rl; letter-spacing: .1em; font-size: .95rem; line-height: 1.1; color: #d2452f; border: 3px solid #d2452f; padding: 6px 3px; transform: rotate(6deg); opacity: .9; }
     .slot .art.shot { height: auto; padding: 0; background: none; box-shadow: 0 0 0 3px var(--ink); line-height: 0; }
     .slot .art.shot img { width: 100%; height: auto; display: block; }
@@ -201,6 +214,7 @@
       .wrap { width: calc(100% - 32px); } header { padding: 20px 0; flex-wrap: wrap; gap: 10px 20px; } .brand { font-size: 1.3rem; } .brand .chev { width: 15px; height: 21px; }
       .brand .cur { width: 13px; height: 5px; margin-bottom: 2px; } nav { gap: 14px; font-size: .95rem; } nav a { padding-left: 0; } nav a::before { display: none; }
       .screen { padding: 8px; } .view { height: 210px; } .hud { top: 8px; left: 8px; font-size: .8rem; padding: 4px 10px; }
+      .track .feature { flex-basis: calc(100% - 36px); padding: 16px; } .track { gap: 14px; }
       .dialog { padding: 20px 18px 26px; min-height: 136px; } .dialog .typed { font-size: 1.02rem; } .sec { margin-top: 64px; font-size: 1.4rem; }
       .stages { white-space: normal; display: block; } .log li { grid-template-columns: 1fr; } .journal { padding: 4px 18px 14px; }
       .tip-pitch { flex-direction: column; padding: 22px; } .hint { display: block; } .menu-item { gap: 14px; padding: 14px 16px; } .mi-art { width: 64px; height: 64px; } .mi-art svg { max-width: 48px; height: auto; }
@@ -208,7 +222,7 @@
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       .cloud, .petal, .chick, .robot, .walk, .sway, .stars, .slot .sprite, .robot-big, .sec .arrow, .status .heart, .eye, .chest { animation: none; }
-      .brand .chev { transition: none; } .menu-item, .mi-go { transition: none; }
+      .brand .chev { transition: none; } .menu-item, .mi-go { transition: none; } .track { scroll-behavior: auto; }
     }
   </style>
 </head>
@@ -221,7 +235,7 @@
     <main>
       <section>
         <h1 class="sec page-title"><span class="arrow" aria-hidden="true">▶</span>Farm Journal <span class="ja" lang="ja">日記</span></h1><p class="lede">What's been happening on the farm, newest first.</p>
-        <div class="journal px"><ol class="log"><li><time datetime="2026-10-07">Oct 7, 2026</time><p>First harvest! 🚆 TengokTren is live — watch trains move through a 3D Klang Valley.</p></li><li><time datetime="2026-10-07">Oct 7, 2026</time><p>Rebuilt the whole site as a pixel farm 🌱 Hired a robot farmer. His salary? Your tips.</p></li><li><time datetime="2026-10-06">Oct 6, 2026</time><p>New logo day — the &gt; and the _ now move. Took the GitHub links off too.</p></li></ol></div>
+        <div class="journal px"><ol class="log"><li><time datetime="2026-10-08">Oct 8, 2026</time><p>Second harvest! 🎲 LIFE.EXE is live — one life, infinite bad decisions. Can you make it to 65?</p></li><li><time datetime="2026-10-07">Oct 7, 2026</time><p>First harvest! 🚆 TengokTren is live — watch trains move through a 3D Klang Valley.</p></li><li><time datetime="2026-10-07">Oct 7, 2026</time><p>Rebuilt the whole site as a pixel farm 🌱 Hired a robot farmer. His salary? Your tips.</p></li><li><time datetime="2026-10-06">Oct 6, 2026</time><p>New logo day — the &gt; and the _ now move. Took the GitHub links off too.</p></li></ol></div>
       </section>
     </main>
   </div>
@@ -257,6 +271,33 @@
           word.textContent = full.slice(0, ++n);
           if (n < full.length) setTimeout(step, 55 + Math.random() * 45); else brand.classList.remove("typing");
         })();
+      }
+
+      var track = document.querySelector(".carousel .track");
+      if (track && track.children.length > 1) {
+        var slides = Array.prototype.slice.call(track.children);
+        var dots = document.querySelectorAll(".carousel .dot");
+        var prev = document.querySelector(".carousel .prev"), next = document.querySelector(".carousel .next");
+        var current = function () {
+          var best = 0, dist = Infinity;
+          slides.forEach(function (s, i) { var d = Math.abs(s.offsetLeft - track.offsetLeft - track.scrollLeft); if (d < dist) { dist = d; best = i; } });
+          return best;
+        };
+        var go = function (i) { i = Math.max(0, Math.min(slides.length - 1, i)); track.scrollTo({ left: slides[i].offsetLeft - track.offsetLeft }); };
+        var sync = function () {
+          var i = current();
+          dots.forEach(function (d, j) { if (j === i) d.setAttribute("aria-current", "true"); else d.removeAttribute("aria-current"); });
+          prev.disabled = i === 0; next.disabled = i === slides.length - 1;
+        };
+        var raf = 0;
+        track.addEventListener("scroll", function () { cancelAnimationFrame(raf); raf = requestAnimationFrame(sync); }, { passive: true });
+        prev.addEventListener("click", function () { go(current() - 1); });
+        next.addEventListener("click", function () { go(current() + 1); });
+        dots.forEach(function (d, j) { d.addEventListener("click", function (ev) { ev.preventDefault(); go(j); }); });
+        track.addEventListener("keydown", function (ev) {
+          if (ev.key === "ArrowRight") { ev.preventDefault(); go(current() + 1); }
+          if (ev.key === "ArrowLeft") { ev.preventDefault(); go(current() - 1); }
+        });
       }
 
       var tabs = document.querySelectorAll('[role="tab"]');
